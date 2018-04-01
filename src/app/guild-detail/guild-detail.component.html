@@ -1,0 +1,11 @@
+<div *ngIf="guild">
+  <img src="{{guild.iconURL}}">{{guild.name}}
+</div>
+
+<div *ngIf="guild.voiceChannels">
+  <ul class="channels">
+    <li *ngFor="let channel of guild.voiceChannels">
+      <button (click)="joinVoiceChannel(channel)">join</button>{{channel.name}}
+    </li>
+  </ul>
+</div>

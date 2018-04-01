@@ -1,0 +1,7 @@
+<ul class="guilds">
+  <li *ngFor="let guild of guilds">
+    <a routerLink="/guild/{{guild.id}}">
+      <img src="{{guild.iconURL}}">{{guild.name}}
+    </a>
+  </li>
+</ul>

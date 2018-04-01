@@ -1,0 +1,8 @@
+export class Channel {
+  id: string;
+  name: string;
+  constructor(obj: any) {
+    this.id = obj.id || 'noID';
+    this.name = obj.name || 'noName';
+  }
+}
