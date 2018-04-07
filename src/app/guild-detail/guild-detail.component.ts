@@ -6,13 +6,14 @@ import { Channel } from '../models/channel';
 import { DiscordBotApiService } from '../discord-bot-api.service';
 
 
+
 @Component({
   selector: 'app-guild-detail',
   templateUrl: './guild-detail.component.html',
   styleUrls: ['./guild-detail.component.css']
 })
 export class GuildDetailComponent implements OnInit {
-  guild: Object = [];
+  guild: any = []; // TODO Type
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
 
   }
