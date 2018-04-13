@@ -13,7 +13,7 @@ import { DiscordBotApiService } from '../discord-bot-api.service';
   styleUrls: ['./guild-detail.component.css']
 })
 export class GuildDetailComponent implements OnInit {
-  private guild: any = []; // TODO Type
+  guild: any = []; // TODO Type
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
   }
 

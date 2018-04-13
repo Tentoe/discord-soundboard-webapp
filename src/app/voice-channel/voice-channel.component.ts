@@ -13,7 +13,7 @@ export class VoiceChannelComponent implements OnInit {
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
   }
   private voiceChannelID: string;
-  private soundFiles;
+  soundFiles;
   ngOnInit() {
     this.voiceChannelID = this.route.snapshot.paramMap.get('id');
     this.botApi.getSoundFiles().subscribe(sf => this.soundFiles = sf);
