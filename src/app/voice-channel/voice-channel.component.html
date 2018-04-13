@@ -1,6 +1,9 @@
 <div *ngIf="soundFiles">
 
   <mat-nav-list role="list">
+    <mat-list-item (click)="stop()">
+      STOP
+    </mat-list-item>
     <mat-list-item *ngFor="let soundFile of soundFiles" (click)="playSoundFile(soundFile._id)">
       {{soundFile.name}}
     </mat-list-item>

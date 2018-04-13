@@ -20,7 +20,10 @@ export class VoiceChannelComponent implements OnInit {
   }
   playSoundFile(soundFileID: string) {
       console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.voiceChannelID);
-
       this.botApi.playSoundFile(this.voiceChannelID, soundFileID).subscribe(console.log);
+  }
+  stop() {
+    console.log('clicked stop in voice :' + this.voiceChannelID);
+    this.botApi.stop(this.voiceChannelID).subscribe(console.log);
   }
 }

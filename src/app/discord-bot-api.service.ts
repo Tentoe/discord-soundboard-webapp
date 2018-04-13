@@ -18,19 +18,24 @@ const joinVoiceChannelURL = baseURL + 'joinVoiceChannel/';
 const soundFilesURL = baseURL + 'soundboards';
 const voiceChannelURL = 'voicechannel/';
 const playURL = '/play/';
+const stopURL = '/stop';
+
 
 @Injectable()
 export class DiscordBotApiService {
 
-
   constructor(private http: HttpClient) { }
 
+  getPlayURL(voiceID: string, soundFileID: string): string {
+    const ret = baseURL + voiceChannelURL + voiceID + playURL + soundFileID;
+    console.log(ret);
+    return ret;
+  }
 
-getPlayURL(voiceID: string, soundFileID: string): string {
-  const ret = baseURL + voiceChannelURL + voiceID + playURL + soundFileID;
-  console.log(ret);
-  return ret;
-}
+  getStopURL(voiceID: string): string {
+    const ret = baseURL + voiceChannelURL + voiceID + stopURL;
+    return ret;
+  }
 
   getGuilds(): Observable<Guild[]> {
     return this.http.get<Guild[]>(guildsURL)
@@ -59,7 +64,7 @@ getPlayURL(voiceID: string, soundFileID: string): string {
       );
   }
 
-  playSoundFile(voiceID: string, soundFileID: string ) { // TODO Type
+  playSoundFile(voiceID: string, soundFileID: string) { // TODO Type
     return this.http.get<string>(this.getPlayURL(voiceID, soundFileID), httpOptions)
       .pipe(
         tap(() => console.log('playSoundFile+')), // TODO better Logging
@@ -67,6 +72,13 @@ getPlayURL(voiceID: string, soundFileID: string): string {
       );
   }
 
+  stop(voiceID: string) { // TODO Type
+    return this.http.get<string>(this.getStopURL(voiceID), httpOptions)
+      .pipe(
+        tap(() => console.log('stop+')), // TODO better Logging
+        catchError(this.handleError('stop', []))
+      );
+  }
 
   /**
    * Handle Http operation that failed.
