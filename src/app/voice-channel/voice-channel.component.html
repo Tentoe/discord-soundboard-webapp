@@ -1,0 +1,10 @@
+<div *ngIf="soundFiles">
+
+  <mat-nav-list role="list">
+    <mat-list-item *ngFor="let soundFile of soundFiles" (click)="playSoundFile(soundFile._id)">
+      {{soundFile.name}}
+    </mat-list-item>
+  </mat-nav-list>
+
+
+</div>

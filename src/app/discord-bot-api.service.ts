@@ -12,16 +12,28 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+const baseURL = '/api/';
+const guildsURL = baseURL + 'guilds';
+const joinVoiceChannelURL = baseURL + 'joinVoiceChannel/';
+const soundFilesURL = baseURL + 'soundboards';
+const voiceChannelURL = 'voicechannel/';
+const playURL = '/play/';
+
 @Injectable()
 export class DiscordBotApiService {
-  baseURL = '/api/';
-  guildsURL = this.baseURL + 'guilds';
-  joinVoiceChannelURL = this.baseURL + 'joinVoiceChannel/';
+
 
   constructor(private http: HttpClient) { }
 
+
+getPlayURL(voiceID: string, soundFileID: string): string {
+  const ret = baseURL + voiceChannelURL + voiceID + playURL + soundFileID;
+  console.log(ret);
+  return ret;
+}
+
   getGuilds(): Observable<Guild[]> {
-    return this.http.get<Guild[]>(this.guildsURL)
+    return this.http.get<Guild[]>(guildsURL)
       .pipe(
         tap(() => console.log('got Heroes')), // TODO better Logging
         map(guilds => guilds.map(g => new Guild(g))),
@@ -30,13 +42,31 @@ export class DiscordBotApiService {
 
   }
 
-  joinVoiceChannel(id: string) {
-    return this.http.post<string>(this.joinVoiceChannelURL + id, '', httpOptions)
+  joinVoiceChannel(id: string) { // TODO Type
+    return this.http.post<string>(joinVoiceChannelURL + id, '', httpOptions)
       .pipe(
         tap(() => console.log('joinVoiceChannelURL+')), // TODO better Logging
-        catchError(this.handleError('getHeroes', []))
+        catchError(this.handleError('joinVoiceChannel', []))
       );
   }
+
+
+  getSoundFiles() { // TODO Type
+    return this.http.get<string>(soundFilesURL, httpOptions)
+      .pipe(
+        tap(() => console.log('soundFilesURL+')), // TODO better Logging
+        catchError(this.handleError('getSoundFiles', []))
+      );
+  }
+
+  playSoundFile(voiceID: string, soundFileID: string ) { // TODO Type
+    return this.http.get<string>(this.getPlayURL(voiceID, soundFileID), httpOptions)
+      .pipe(
+        tap(() => console.log('playSoundFile+')), // TODO better Logging
+        catchError(this.handleError('playSoundFile', []))
+      );
+  }
+
 
   /**
    * Handle Http operation that failed.

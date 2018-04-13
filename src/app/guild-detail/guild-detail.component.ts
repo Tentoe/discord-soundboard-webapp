@@ -13,16 +13,14 @@ import { DiscordBotApiService } from '../discord-bot-api.service';
   styleUrls: ['./guild-detail.component.css']
 })
 export class GuildDetailComponent implements OnInit {
-  guild: any = []; // TODO Type
+  private guild: any = []; // TODO Type
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
-
   }
 
-  ngOnInit() {
+  ngOnInit() { // TODO create api getGuild()
     const guildID = this.route.snapshot.paramMap.get('id');
     this.botApi.getGuilds().subscribe(guilds => {
       this.guild = guilds.find(g => g.id === guildID);
-      console.log(this.guild);
     });
 
   }
