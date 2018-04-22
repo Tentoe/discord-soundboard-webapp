@@ -20,6 +20,7 @@ const playURL = '/play/';
 const stopURL = '/stop';
 const joinURL = '/join';
 const leaveURL = '/leave';
+const randomURL = '/random';
 
 
 
@@ -47,6 +48,11 @@ export class DiscordBotApiService {
 
   getLeaveURL(voiceID: string): string {
     const ret = voiceChannelURL + voiceID + leaveURL;
+    return ret;
+  }
+
+  getPlayRandomURL(voiceID: string): string {
+    const ret = voiceChannelURL + voiceID + randomURL;
     return ret;
   }
 
@@ -79,6 +85,13 @@ export class DiscordBotApiService {
 
   playSoundFile(voiceID: string, soundFileID: string) { // TODO Type
     return this.http.post<string>(this.getPlayURL(voiceID, soundFileID), '', httpOptions)
+      .pipe(
+        tap(() => console.log('playSoundFile+')), // TODO better Logging
+        catchError(this.handleError('playSoundFile', []))
+      );
+  }
+  playRandomSoundFile(voiceID: string) { // TODO Type
+    return this.http.post<string>(this.getPlayRandomURL(voiceID), '', httpOptions)
       .pipe(
         tap(() => console.log('playSoundFile+')), // TODO better Logging
         catchError(this.handleError('playSoundFile', []))

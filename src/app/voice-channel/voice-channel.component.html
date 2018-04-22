@@ -1,11 +1,14 @@
 <mat-toolbar class="sticky" color="primary">
 
-
-  <button mat-raised-button color="warn" (click)="stop()">STOP</button>
+  <span>
+    <button mat-raised-button color="warn" (click)="stop()">STOP</button>
+    <button mat-raised-button color="accent" (click)="random()">RANDOM</button>
+  </span>
   <span class="fill-remaining-space"></span>
-
-  <button mat-button (click)="joinVoiceChannel()">JOIN</button>
-  <button mat-button color="warn" (click)="leaveVoiceChannel()">LEAVE</button>
+  <span>
+    <button mat-button (click)="joinVoiceChannel()">JOIN</button>
+    <button mat-button color="warn" (click)="leaveVoiceChannel()">LEAVE</button>
+  </span>
 </mat-toolbar>
 <div *ngIf="soundFiles">
 

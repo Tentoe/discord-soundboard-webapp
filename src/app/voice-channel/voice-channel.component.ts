@@ -26,6 +26,10 @@ export class VoiceChannelComponent implements OnInit {
     console.log('clicked stop in voice :' + this.voiceChannelID);
     this.botApi.stop(this.voiceChannelID).subscribe(console.log);
   }
+  random() {
+      console.log('clicked Random');
+      this.botApi.playRandomSoundFile(this.voiceChannelID).subscribe(console.log);
+  }
 
   joinVoiceChannel(): void {
     this.botApi.joinVoiceChannel(this.voiceChannelID).subscribe(console.log);
