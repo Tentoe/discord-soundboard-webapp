@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'guild/:id', component: GuildDetailComponent },
   { path: 'upload', component: SoundFileUploadComponent },
-  { path: 'voicechannel/:id', component: VoiceChannelComponent },
+  { path: 'guild/:id/soundboard', component: VoiceChannelComponent },
 ];
 
 @NgModule({

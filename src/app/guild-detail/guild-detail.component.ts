@@ -14,16 +14,24 @@ import { DiscordBotApiService } from '../discord-bot-api.service';
 })
 export class GuildDetailComponent implements OnInit {
   guild: any = []; // TODO Type
+  selecteChannelID = '';
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
   }
 
   ngOnInit() { // TODO create api getGuild()
     const guildID = this.route.snapshot.paramMap.get('id');
-    this.botApi.getGuilds().subscribe(guilds => {
-      this.guild = guilds.find(g => g.id === guildID);
+    this.botApi.getGuild(guildID).subscribe(guild => {
+      this.guild = guild;
+      this.selecteChannelID = this.guild.voiceChannel || '';
     });
 
   }
 
+  joinVoiceChannel(): void {
+  if (this.selecteChannelID) { this.botApi.joinVoiceChannel(this.selecteChannelID).subscribe(console.log); }
+  }
 
+  leaveVoiceChannel(): void {
+    this.botApi.leaveVoiceChannel(this.guild.id).subscribe(console.log);
+  }
 }

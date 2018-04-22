@@ -2,10 +2,13 @@
   <img src="{{guild.iconURL}}">{{guild.name}}
 </div>
 
-<div *ngIf="guild.voiceChannels">
-  <ul class="channels">
-    <li *ngFor="let channel of guild.voiceChannels">
-      <a routerLink="/voicechannel/{{channel.id}}">{{channel.name}}</a>
-    </li>
-  </ul>
-</div>
+<mat-form-field *ngIf="guild.voiceChannels">
+  <mat-select [(value)]="selecteChannelID">
+    <mat-option *ngFor="let channel of guild.voiceChannels" value="{{channel.id}}">{{channel.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-raised-button (click)="joinVoiceChannel(selecteChannelID)">JOIN</button>
+<button mat-raised-button color="warn" (click)="leaveVoiceChannel()">LEAVE</button>
+<br>
+<br>
+<a routerLink="/guild/{{guild.id}}/soundboard"><button mat-button>SOUNDBOARD</button></a>

@@ -7,6 +7,7 @@ export class Guild {
   name: string;
   iconURL: string;
   voiceChannels: Channel[];
+  voiceChannel: string;
 
   constructor(obj: any) {
     this.id = obj.id || 'noID';
@@ -14,5 +15,6 @@ export class Guild {
     this.name = obj.name || 'noName';
     this.iconURL = obj.iconURL || 'noIconURL';
     this.voiceChannels = obj.channels.filter(c => c.type === 'voice').map(c => new Channel(c)) || [];
+    this.voiceChannel = obj.voiceChannel;
   }
 }

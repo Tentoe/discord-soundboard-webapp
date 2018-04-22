@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileUploadModule } from 'ng2-file-upload';
-import { MatProgressBarModule, MatListModule, MatToolbarModule, MatButtonModule } from '@angular/material';
+import { MatProgressBarModule, MatListModule, MatToolbarModule, MatButtonModule, MatSelectModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,7 +31,8 @@ import { VoiceChannelComponent } from './voice-channel/voice-channel.component';
     MatProgressBarModule,
     MatListModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
   ],
   providers: [DiscordBotApiService],
   bootstrap: [AppComponent]

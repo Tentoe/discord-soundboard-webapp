@@ -12,30 +12,24 @@ export class VoiceChannelComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
   }
-  private voiceChannelID: string;
+  private guildID: string;
   soundFiles;
   ngOnInit() {
-    this.voiceChannelID = this.route.snapshot.paramMap.get('id');
+    this.guildID = this.route.snapshot.paramMap.get('id');
     this.botApi.getSoundFiles().subscribe(sf => this.soundFiles = sf);
   }
   playSoundFile(soundFileID: string) {
-      console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.voiceChannelID);
-      this.botApi.playSoundFile(this.voiceChannelID, soundFileID).subscribe(console.log);
+      console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.guildID);
+      this.botApi.playSoundFile(this.guildID, soundFileID).subscribe(console.log);
   }
   stop() {
-    console.log('clicked stop in voice :' + this.voiceChannelID);
-    this.botApi.stop(this.voiceChannelID).subscribe(console.log);
+    console.log('clicked stop in guild :' + this.guildID);
+    this.botApi.stop(this.guildID).subscribe(console.log);
   }
   random() {
       console.log('clicked Random');
-      this.botApi.playRandomSoundFile(this.voiceChannelID).subscribe(console.log);
+      this.botApi.playRandomSoundFile(this.guildID).subscribe(console.log);
   }
 
-  joinVoiceChannel(): void {
-    this.botApi.joinVoiceChannel(this.voiceChannelID).subscribe(console.log);
-  }
 
-  leaveVoiceChannel(): void {
-    this.botApi.leaveVoiceChannel(this.voiceChannelID).subscribe(console.log);
-  }
 }
