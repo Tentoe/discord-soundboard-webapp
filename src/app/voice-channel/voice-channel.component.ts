@@ -30,4 +30,8 @@ export class VoiceChannelComponent implements OnInit {
   joinVoiceChannel(): void {
     this.botApi.joinVoiceChannel(this.voiceChannelID).subscribe(console.log);
   }
+
+  leaveVoiceChannel(): void {
+    this.botApi.leaveVoiceChannel(this.voiceChannelID).subscribe(console.log);
+  }
 }

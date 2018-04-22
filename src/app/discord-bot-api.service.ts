@@ -19,6 +19,8 @@ const voiceChannelURL = baseURL + 'voicechannel/';
 const playURL = '/play/';
 const stopURL = '/stop';
 const joinURL = '/join';
+const leaveURL = '/leave';
+
 
 
 @Injectable()
@@ -40,6 +42,11 @@ export class DiscordBotApiService {
 
   getJoinURL(voiceID: string): string {
     const ret = voiceChannelURL + voiceID + joinURL;
+    return ret;
+  }
+
+  getLeaveURL(voiceID: string): string {
+    const ret = voiceChannelURL + voiceID + leaveURL;
     return ret;
   }
 
@@ -71,7 +78,7 @@ export class DiscordBotApiService {
   }
 
   playSoundFile(voiceID: string, soundFileID: string) { // TODO Type
-    return this.http.get<string>(this.getPlayURL(voiceID, soundFileID), httpOptions)
+    return this.http.post<string>(this.getPlayURL(voiceID, soundFileID), '', httpOptions)
       .pipe(
         tap(() => console.log('playSoundFile+')), // TODO better Logging
         catchError(this.handleError('playSoundFile', []))
@@ -79,12 +86,21 @@ export class DiscordBotApiService {
   }
 
   stop(voiceID: string) { // TODO Type
-    return this.http.get<string>(this.getStopURL(voiceID), httpOptions)
+    return this.http.post<string>(this.getStopURL(voiceID), '', httpOptions)
       .pipe(
         tap(() => console.log('stop+')), // TODO better Logging
         catchError(this.handleError('stop', []))
       );
   }
+
+  leaveVoiceChannel(voiceID: string) { // TODO Type
+    return this.http.post<string>(this.getLeaveURL(voiceID), '', httpOptions)
+      .pipe(
+        tap(() => console.log('leave+')), // TODO better Logging
+        catchError(this.handleError('leave', []))
+      );
+  }
+
 
   /**
    * Handle Http operation that failed.
