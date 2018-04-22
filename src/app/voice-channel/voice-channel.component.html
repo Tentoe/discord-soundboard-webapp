@@ -1,9 +1,14 @@
+<mat-toolbar class="sticky" color="primary">
+
+
+  <button mat-raised-button color="warn" (click)="stop()">STOP</button>
+  <span class="fill-remaining-space"></span>
+
+  <button mat-button (click)="joinVoiceChannel()">JOIN</button>
+</mat-toolbar>
 <div *ngIf="soundFiles">
 
   <mat-nav-list role="list">
-    <mat-list-item (click)="stop()">
-      STOP
-    </mat-list-item>
     <mat-list-item *ngFor="let soundFile of soundFiles" (click)="playSoundFile(soundFile._id)">
       {{soundFile.name}}
     </mat-list-item>

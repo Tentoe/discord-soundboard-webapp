@@ -24,10 +24,6 @@ export class GuildDetailComponent implements OnInit {
     });
 
   }
-  joinVoiceChannel(channel: Channel): void {
 
-    this.botApi.joinVoiceChannel(channel.id).subscribe(console.log);
-
-  }
 
 }

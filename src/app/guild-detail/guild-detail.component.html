@@ -5,7 +5,6 @@
 <div *ngIf="guild.voiceChannels">
   <ul class="channels">
     <li *ngFor="let channel of guild.voiceChannels">
-      <button (click)="joinVoiceChannel(channel)">join</button>
       <a routerLink="/voicechannel/{{channel.id}}">{{channel.name}}</a>
     </li>
   </ul>
