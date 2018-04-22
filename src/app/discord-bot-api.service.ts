@@ -14,11 +14,11 @@ const httpOptions = {
 
 const baseURL = '/api/';
 const guildsURL = baseURL + 'guilds';
-const joinVoiceChannelURL = baseURL + 'joinVoiceChannel/';
 const soundFilesURL = baseURL + 'soundboards';
-const voiceChannelURL = 'voicechannel/';
+const voiceChannelURL = baseURL + 'voicechannel/';
 const playURL = '/play/';
 const stopURL = '/stop';
+const joinURL = '/join';
 
 
 @Injectable()
@@ -26,14 +26,20 @@ export class DiscordBotApiService {
 
   constructor(private http: HttpClient) { }
 
-  getPlayURL(voiceID: string, soundFileID: string): string {
-    const ret = baseURL + voiceChannelURL + voiceID + playURL + soundFileID;
-    console.log(ret);
+
+
+  getStopURL(voiceID: string): string {
+    const ret = voiceChannelURL + voiceID + stopURL;
     return ret;
   }
 
-  getStopURL(voiceID: string): string {
-    const ret = baseURL + voiceChannelURL + voiceID + stopURL;
+  getPlayURL(voiceID: string, soundFileID: string): string {
+    const ret = voiceChannelURL + voiceID + playURL + soundFileID;
+    return ret;
+  }
+
+  getJoinURL(voiceID: string): string {
+    const ret = voiceChannelURL + voiceID + joinURL;
     return ret;
   }
 
@@ -48,7 +54,7 @@ export class DiscordBotApiService {
   }
 
   joinVoiceChannel(id: string) { // TODO Type
-    return this.http.post<string>(joinVoiceChannelURL + id, '', httpOptions)
+    return this.http.post<string>(this.getJoinURL(id), '', httpOptions)
       .pipe(
         tap(() => console.log('joinVoiceChannelURL+')), // TODO better Logging
         catchError(this.handleError('joinVoiceChannel', []))
