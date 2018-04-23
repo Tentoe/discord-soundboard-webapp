@@ -1,11 +1,18 @@
 .sticky {
   position: sticky;
   top: 0px;
-  z-index:999;
+  z-index: 999;
 }
 
 .fill-remaining-space {
   /* This fills the remaining space, by using flexbox.
      Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
+}
+
+
+.no-overflow {
+  text-overflow: "";
+  overflow: hidden;
+  white-space: nowrap;
 }
