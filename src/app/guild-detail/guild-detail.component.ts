@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Channel } from '../models/channel';
+import { Guild } from '../models/guild';
 
 import { DiscordBotApiService } from '../discord-bot-api.service';
+
 
 
 
@@ -13,14 +15,15 @@ import { DiscordBotApiService } from '../discord-bot-api.service';
   styleUrls: ['./guild-detail.component.css']
 })
 export class GuildDetailComponent implements OnInit {
-  guild: any = []; // TODO Type
+  guild: Guild ;
+  guildID = '';
   selecteChannelID = '';
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
   }
 
   ngOnInit() { // TODO create api getGuild()
-    const guildID = this.route.snapshot.paramMap.get('id');
-    this.botApi.getGuild(guildID).subscribe(guild => {
+    this.guildID = this.route.snapshot.paramMap.get('id');
+    this.botApi.getGuild(this.guildID).subscribe(guild => {
       this.guild = guild;
       this.selecteChannelID = this.guild.voiceChannel || '';
     });
@@ -28,7 +31,7 @@ export class GuildDetailComponent implements OnInit {
   }
 
   joinVoiceChannel(): void {
-  if (this.selecteChannelID) { this.botApi.joinVoiceChannel(this.selecteChannelID).subscribe(console.log); }
+  if (this.selecteChannelID) { this.botApi.joinVoiceChannel(this.guildID, this.selecteChannelID).subscribe(console.log); }
   }
 
   leaveVoiceChannel(): void {

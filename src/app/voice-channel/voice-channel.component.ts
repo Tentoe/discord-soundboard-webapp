@@ -16,7 +16,7 @@ export class VoiceChannelComponent implements OnInit {
   soundFiles;
   ngOnInit() {
     this.guildID = this.route.snapshot.paramMap.get('id');
-    this.botApi.getSoundFiles().subscribe(sf => this.soundFiles = sf);
+    this.botApi.getSoundFiles(this.guildID).subscribe(sf => this.soundFiles = sf);
   }
   playSoundFile(soundFileID: string) {
       console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.guildID);

@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Guild } from './models/guild';
 import { Channel } from './models/channel';
+import { SoundFile } from './models/soundfile';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,13 +16,13 @@ const httpOptions = {
 const baseURL = '/api/';
 const guildsURL = baseURL + 'guilds';
 const guildURL = baseURL + 'guild/';
-const soundFilesURL = baseURL + 'soundboards';
 const voiceChannelURL = baseURL + 'voicechannel/';
 const playURL = '/play/';
 const stopURL = '/stop';
-const joinURL = '/join';
+const joinURL = '/join/';
 const leaveURL = '/leave';
 const randomURL = '/random';
+const soundFilesURL = '/soundfiles';
 
 
 
@@ -29,7 +30,6 @@ const randomURL = '/random';
 export class DiscordBotApiService {
 
   constructor(private http: HttpClient) { }
-
 
 
   getStopURL(guildID: string): string {
@@ -42,8 +42,8 @@ export class DiscordBotApiService {
     return ret;
   }
 
-  getJoinURL(voiceID: string): string {
-    const ret = voiceChannelURL + voiceID + joinURL;
+  getJoinURL(guildID: string, voiceID: string): string {
+    const ret = guildURL + guildID + joinURL + voiceID;
     return ret;
   }
 
@@ -62,28 +62,33 @@ export class DiscordBotApiService {
     return ret;
   }
 
+  getSoundFilesURL(guildID: string): string {
+    const ret = guildURL + guildID + soundFilesURL;
+    return ret;
+  }
+
   getGuilds(): Observable<Guild[]> {
-    return this.http.get<Guild[]>(guildsURL)
+    return this.http.get<{data: Guild[]}>(guildsURL)
       .pipe(
         tap(() => console.log('got Guilds')), // TODO better Logging
-        map(guilds => guilds.map(g => new Guild(g))),
+        map(response => response.data.map(g => new Guild(g))),
         catchError(this.handleError('getGuilds', []))
       );
 
   }
 
   getGuild(id: string): Observable<Guild> {
-    return this.http.get<Guild>(this.getGuildURL(id))
+    return this.http.get<{data: Guild}>(this.getGuildURL(id))
       .pipe(
         tap(() => console.log('got Guild')), // TODO better Logging
-        map(g => new Guild(g)),
+        map(response => new Guild(response.data)),
         catchError(this.handleError('getGuild', null))
       );
 
   }
 
-  joinVoiceChannel(id: string) { // TODO Type
-    return this.http.post<string>(this.getJoinURL(id), '', httpOptions)
+  joinVoiceChannel(guildID: string, voiceID: string) { // TODO Type
+    return this.http.post<string>(this.getJoinURL(guildID, voiceID), '', httpOptions)
       .pipe(
         tap(() => console.log('joinVoiceChannelURL+')), // TODO better Logging
         catchError(this.handleError('joinVoiceChannel', []))
@@ -91,10 +96,11 @@ export class DiscordBotApiService {
   }
 
 
-  getSoundFiles() { // TODO Type
-    return this.http.get<string>(soundFilesURL, httpOptions)
+  getSoundFiles(guildID: string) { // TODO Type
+    return this.http.get<{data: [SoundFile]}>(this.getSoundFilesURL(guildID), httpOptions)
       .pipe(
         tap(() => console.log('soundFilesURL+')), // TODO better Logging
+        map(response => response.data.map(sf => new SoundFile(sf))),
         catchError(this.handleError('getSoundFiles', []))
       );
   }
