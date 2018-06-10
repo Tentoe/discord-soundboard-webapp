@@ -21,7 +21,7 @@ export class GuildDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
   }
 
-  ngOnInit() { // TODO create api getGuild()
+  ngOnInit() {
     this.guildID = this.route.snapshot.paramMap.get('id');
     this.botApi.getGuild(this.guildID).subscribe(guild => {
       this.guild = guild;

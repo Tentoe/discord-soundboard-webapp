@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'guild/:id', component: GuildDetailComponent },
-  { path: 'upload', component: SoundFileUploadComponent },
+  { path: 'guild/:id/upload', component: SoundFileUploadComponent },
   { path: 'guild/:id/soundboard', component: VoiceChannelComponent },
 ];
 
