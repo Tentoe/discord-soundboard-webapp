@@ -16,7 +16,7 @@ export class SoundFileUploadComponent implements OnInit {
 
   ngOnInit() {
     this.guildID = this.route.snapshot.paramMap.get('id');
-    this.uploader = new FileUploader({url: `/api/guild/${this.guildID}/upload`});
+    this.uploader = new FileUploader({url: `/api/guilds/${this.guildID}/upload`});
   }
 
 }

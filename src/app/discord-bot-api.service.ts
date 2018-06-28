@@ -15,7 +15,7 @@ const httpOptions = {
 
 const baseURL = '/api/';
 const guildsURL = baseURL + 'guilds';
-const guildURL = baseURL + 'guild/';
+const guildURL = baseURL + 'guilds/';
 const voiceChannelURL = baseURL + 'voicechannel/';
 const playURL = '/play/';
 const stopURL = '/stop';
