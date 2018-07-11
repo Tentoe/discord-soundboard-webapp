@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Channel } from '../models/channel';
-import { Guild } from '../models/guild';
+import { Channel } from 'models/channel';
+import { Guild } from 'models/guild';
 
-import { DiscordBotApiService } from '../discord-bot-api.service';
+import { DiscordBotApiService } from 'app/discord-bot-api.service';
 
 
 

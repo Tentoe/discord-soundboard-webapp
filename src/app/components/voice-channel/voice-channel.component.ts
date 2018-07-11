@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { DiscordBotApiService } from '../discord-bot-api.service';
+import { DiscordBotApiService } from 'app/discord-bot-api.service';
 
 @Component({
   selector: 'app-voice-channel',

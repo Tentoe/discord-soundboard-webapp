@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscordBotApiService } from '../discord-bot-api.service';
+import { DiscordBotApiService } from 'app/discord-bot-api.service';
 
 @Component({
   selector: 'app-dashboard',

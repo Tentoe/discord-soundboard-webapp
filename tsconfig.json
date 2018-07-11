@@ -2,6 +2,12 @@
   "compileOnSave": true,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
+    "paths": {
+      "app/*": ["app/*"],
+      "components/*": ["app/components/*"],
+      "models/*": ["app/models/*"],
+    },
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",

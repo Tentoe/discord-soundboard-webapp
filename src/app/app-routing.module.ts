@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { GuildDetailComponent } from './guild-detail/guild-detail.component';
-import { SoundFileUploadComponent } from './sound-file-upload/sound-file-upload.component';
-import {VoiceChannelComponent } from './voice-channel/voice-channel.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { GuildDetailComponent } from './components/guild-detail/guild-detail.component';
+import { SoundFileUploadComponent } from './components/sound-file-upload/sound-file-upload.component';
+import {VoiceChannelComponent } from './components/voice-channel/voice-channel.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
