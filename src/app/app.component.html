@@ -1,4 +1,25 @@
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-</nav>
+<mat-toolbar color="primary">
+  <button mat-button (click)="goBack()">
+    <mat-icon color="foreground">arrow_back</mat-icon>
+  </button>
+  <a routerLink="/dashboard">
+    <button mat-button>
+      <mat-icon>home</mat-icon>
+    </button>
+  </a>
+  <div *ngIf="!user">
+    <a href="/api/auth/discord">
+      <button mat-button>
+        <mat-icon>play_for_work</mat-icon>
+        Login
+      </button>
+    </a>
+  </div>
+  <div *ngIf="user">
+        <button mat-button>
+         <span [ngStyle]="{'font-size': 'large'}">{{user}}</span> <mat-icon>done</mat-icon>
+        </button>
+      
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>

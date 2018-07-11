@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { Status } from './models';
 import { Guild } from './models/guild';
 import { Channel } from './models/channel';
 import { SoundFile } from './models/soundfile';
@@ -14,6 +15,7 @@ const httpOptions = {
 };
 
 const baseURL = '/api/';
+const statusURL = baseURL + 'status';
 const guildsURL = baseURL + 'guilds';
 const guildURL = baseURL + 'guilds/';
 const voiceChannelURL = baseURL + 'voicechannel/';
@@ -133,6 +135,15 @@ export class DiscordBotApiService {
       .pipe(
         tap(() => console.log('leave+')), // TODO better Logging
         catchError(this.handleError('leave', []))
+      );
+  }
+
+  getStatus() {
+    return this.http.get<{data: Status}>(statusURL)
+      .pipe(
+        tap(() => console.log('got Status')), // TODO better Logging
+        map(response => response.data,
+        catchError(this.handleError('getStatus', [])))
       );
   }
 
