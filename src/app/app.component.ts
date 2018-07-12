@@ -11,12 +11,14 @@ import { DiscordBotApiService } from './discord-bot-api.service';
 export class AppComponent implements OnInit {
   title = 'app';
   user = '';
-  constructor(private location: Location, private botApi: DiscordBotApiService) {}
+  constructor(private location: Location, private botApi: DiscordBotApiService) { }
   ngOnInit() {
     this.botApi.getStatus().subscribe(status => {
-      const {user: {username}} = status;
-      this.user = username ;
+      try {
+        this.user = status.user.username;
+      } catch { }
     });
+
   }
   goBack() { // TODO make back button a "directory up" button
     this.location.back();
