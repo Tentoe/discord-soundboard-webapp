@@ -7,13 +7,16 @@
   <span class="fill-remaining-space"></span>
 
 </mat-toolbar>
-<div *ngIf="soundFiles">
-
-  <mat-nav-list role="list">
-    <mat-list-item  class="no-overflow" *ngFor="let soundFile of soundFiles" (click)="playSoundFile(soundFile.id)">
-      {{soundFile.name}}
-    </mat-list-item>
-  </mat-nav-list>
 
 
-</div>
+<form class="example-form">
+  <mat-form-field class="full-width">
+    <input type="text" placeholder="sound" matInput [formControl]="soundFilesControl" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getName" (optionSelected)="soundSelected($event)">
+      <mat-option *ngFor="let option of filteredsoundFiles | async" [value]="option">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+

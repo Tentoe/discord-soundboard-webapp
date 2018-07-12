@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import {map, startWith, tap} from 'rxjs/operators';
+
 
 import { DiscordBotApiService } from 'app/discord-bot-api.service';
+import { SoundFile } from 'app/models/soundfile';
+
+
+export interface User {
+  name: string;
+}
 
 @Component({
   selector: 'app-voice-channel',
@@ -9,27 +19,58 @@ import { DiscordBotApiService } from 'app/discord-bot-api.service';
   styleUrls: ['./voice-channel.component.css']
 })
 export class VoiceChannelComponent implements OnInit {
+  soundFilesControl = new FormControl();
+  guildID: string;
+  soundFiles: SoundFile[];
+  filteredsoundFiles: Observable<SoundFile[]>;
 
-  constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) {
-  }
-  private guildID: string;
-  soundFiles;
+  constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) { }
+
   ngOnInit() {
     this.guildID = this.route.snapshot.paramMap.get('id');
-    this.botApi.getSoundFiles(this.guildID).subscribe(sf => this.soundFiles = sf);
+    this.botApi.getSoundFiles(this.guildID).subscribe(sf => {
+      this.soundFiles = sf;
+      this.initForm();
+    });
+
   }
+  initForm() {
+
+    this.filteredsoundFiles = this.soundFilesControl.valueChanges
+    .pipe(
+      startWith<string | SoundFile>(''),
+      map(value => typeof value === 'string' ? value : value.name),
+      map(name =>  name ? this._filter(name) : this.soundFiles)
+    );
+  }
+
+
   playSoundFile(soundFileID: string) {
-      console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.guildID);
-      this.botApi.playSoundFile(this.guildID, soundFileID).subscribe(console.log);
+    console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.guildID);
+    this.botApi.playSoundFile(this.guildID, soundFileID).subscribe(console.log);
   }
   stop() {
     console.log('clicked stop in guild :' + this.guildID);
     this.botApi.stop(this.guildID).subscribe(console.log);
   }
   random() {
-      console.log('clicked Random');
-      this.botApi.playRandomSoundFile(this.guildID).subscribe(console.log);
+    console.log('clicked Random');
+    this.botApi.playRandomSoundFile(this.guildID).subscribe(console.log);
   }
 
+  getName(soundfile?: SoundFile): string | undefined {
+    return soundfile ? soundfile.name : undefined;
+  }
+
+  private _filter(name: string): SoundFile[] {
+    const filterValue = name.toLowerCase();
+    return this.soundFiles.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  soundSelected(e) {
+    if (e.option.value.id) {
+       this.playSoundFile(e.option.value.id);
+    }
+  }
 
 }
