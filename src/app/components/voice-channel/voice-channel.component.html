@@ -9,14 +9,15 @@
 </mat-toolbar>
 
 
-<form class="example-form">
-  <mat-form-field class="full-width">
-    <input type="text" placeholder="sound" matInput [formControl]="soundFilesControl" [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getName" (optionSelected)="soundSelected($event)">
-      <mat-option *ngFor="let option of filteredsoundFiles | async" [value]="option">
-        {{option.name}}
-      </mat-option>
-    </mat-autocomplete>
+<div class="sound-search">
+  <mat-form-field>
+    <input type="text" placeholder="sound" matInput [formControl]="soundFilesControl" (keyup.enter)="onEnter()">
   </mat-form-field>
-</form>
 
+
+<mat-nav-list role="list" class="sound-list">
+  <mat-list-item class="no-overflow" *ngFor="let soundFile of filteredsoundFiles | async" (click)="playSoundFile(soundFile.id)">
+    {{soundFile.name}}
+  </mat-list-item>
+</mat-nav-list>
+</div>

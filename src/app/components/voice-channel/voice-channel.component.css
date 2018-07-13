@@ -10,13 +10,21 @@
   flex: 1 1 auto;
 }
 
-
 .no-overflow {
   text-overflow: "";
   overflow: hidden;
   white-space: nowrap;
 }
 
-.full-width {
+.sound-list mat-list-item:first-of-type {
+  border-color: #673ab7;
+  border-style: solid;
+}
+
+.sound-search{
+ padding: 10px;
+}
+
+.sound-search mat-form-field {
   width: 100%;
 }

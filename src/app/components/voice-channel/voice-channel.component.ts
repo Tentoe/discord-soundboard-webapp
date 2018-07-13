@@ -2,16 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import {map, startWith, tap} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 
 import { DiscordBotApiService } from 'app/discord-bot-api.service';
 import { SoundFile } from 'app/models/soundfile';
 
-
-export interface User {
-  name: string;
-}
 
 @Component({
   selector: 'app-voice-channel',
@@ -23,6 +19,8 @@ export class VoiceChannelComponent implements OnInit {
   guildID: string;
   soundFiles: SoundFile[];
   filteredsoundFiles: Observable<SoundFile[]>;
+  selectedSoundFileID = '';
+
 
   constructor(private route: ActivatedRoute, private botApi: DiscordBotApiService) { }
 
@@ -30,20 +28,16 @@ export class VoiceChannelComponent implements OnInit {
     this.guildID = this.route.snapshot.paramMap.get('id');
     this.botApi.getSoundFiles(this.guildID).subscribe(sf => {
       this.soundFiles = sf;
-      this.initForm();
+      this.selectedSoundFileID = this.soundFiles[0].id;
+      this.filteredsoundFiles = this.soundFilesControl.valueChanges
+        .pipe(
+          startWith<string | SoundFile>(''),
+          map(value => typeof value === 'string' ? value : value.name),
+          map(name => name ? this._filter(name) : this.soundFiles)
+        );
     });
 
   }
-  initForm() {
-
-    this.filteredsoundFiles = this.soundFilesControl.valueChanges
-    .pipe(
-      startWith<string | SoundFile>(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name =>  name ? this._filter(name) : this.soundFiles)
-    );
-  }
-
 
   playSoundFile(soundFileID: string) {
     console.log('clicked Soundfile:' + soundFileID + ' in voice :' + this.guildID);
@@ -64,12 +58,16 @@ export class VoiceChannelComponent implements OnInit {
 
   private _filter(name: string): SoundFile[] {
     const filterValue = name.toLowerCase();
-    return this.soundFiles.filter(option => option.name.toLowerCase().includes(filterValue));
+    const filterdItems = this.soundFiles.filter(option => option.name.toLowerCase().includes(filterValue));
+    this.selectedSoundFileID = filterdItems[0] ? filterdItems[0].id : '';
+    return filterdItems;
   }
 
-  soundSelected(e) {
-    if (e.option.value.id) {
-       this.playSoundFile(e.option.value.id);
+  onEnter() {
+    this.soundFilesControl.setValue('', { emitEvent: true });
+
+    if (this.selectedSoundFileID) {
+      this.playSoundFile(this.selectedSoundFileID);
     }
   }
 
