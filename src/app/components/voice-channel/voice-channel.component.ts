@@ -9,6 +9,15 @@ import { DiscordBotApiService } from 'app/discord-bot-api.service';
 import { SoundFile } from 'app/models/soundfile';
 
 
+const sortSounds = (a: SoundFile, b: SoundFile): number => {
+  const nameA = a.name.toUpperCase();
+  const nameB = b.name.toUpperCase();
+
+  if (nameA < nameB) { return -1; }
+  if (nameA > nameB) { return 1; }
+  return 0;
+};
+
 @Component({
   selector: 'app-voice-channel',
   templateUrl: './voice-channel.component.html',
@@ -26,8 +35,8 @@ export class VoiceChannelComponent implements OnInit {
 
   ngOnInit() {
     this.guildID = this.route.snapshot.paramMap.get('id');
-    this.botApi.getSoundFiles(this.guildID).subscribe(sf => {
-      this.soundFiles = sf;
+    this.botApi.getSoundFiles(this.guildID).subscribe((sf: SoundFile[]) => {
+      this.soundFiles = sf.sort(sortSounds);
       this.selectedSoundFileID = this.soundFiles[0].id;
       this.filteredsoundFiles = this.soundFilesControl.valueChanges
         .pipe(
