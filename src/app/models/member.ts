@@ -4,6 +4,6 @@ export class Member {
   constructor(obj: any) {
     const user = obj.user || {};
     this.id = user.id || 'noID';
-    this.name = user.username || 'noName';
+    this.name = user.name || 'noName';
   }
 }

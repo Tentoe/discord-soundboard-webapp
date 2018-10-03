@@ -14,7 +14,7 @@ export class Guild {
     this.members = obj.members.map(m => new Member(m)) || [];
     this.name = obj.name || 'noName';
     this.iconURL = obj.iconURL || 'noIconURL';
-    this.voiceChannels = obj.channels.filter(c => c.type === 'voice').map(c => new Channel(c)) || [];
+    this.voiceChannels = obj.voiceChannels.map(c => new Channel(c)) || [];
     this.voiceChannel = obj.voiceChannel;
   }
 }
